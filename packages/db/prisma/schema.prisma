@@ -1,0 +1,249 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TenantStatus {
+  ONBOARDING
+  LIVE
+  SUSPENDED
+  OFFBOARDED
+}
+
+enum PlanTier {
+  LITE
+  PRO
+  ENTERPRISE
+}
+
+enum UserRole {
+  TENANT_ADMIN
+  OPERATIONS_MANAGER
+  COUNSELLOR_SUPERVISOR
+  COUNSELLOR
+  ANALYST
+  PLATFORM_ADMIN
+  SUPPORT_AGENT
+}
+
+enum LeadStatus {
+  NEW
+  QUEUED
+  CALLING
+  CONTACTED
+  CLOSED
+}
+
+enum CallDisposition {
+  QUALIFIED
+  NOT_INTERESTED
+  INFORMATION_ONLY
+  CALLBACK_REQUESTED
+  OUT_OF_SCOPE
+  NO_ANSWER
+  DROP_OFF
+}
+
+enum LeadScore {
+  HOT
+  WARM
+  COLD
+}
+
+enum CallSessionStatus {
+  INITIATED
+  RINGING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+model Tenant {
+  id                String       @id @default(cuid())
+  name              String
+  slug              String       @unique
+  status            TenantStatus @default(ONBOARDING)
+  planTier          PlanTier     @default(LITE)
+  callingWindowStart String      @default("09:00")
+  callingWindowEnd   String      @default("21:00")
+  timezone          String       @default("Asia/Kolkata")
+  maxConcurrentCalls Int         @default(10)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  users             User[]
+  campaigns         Campaign[]
+  leads             Lead[]
+  callSessions      CallSession[]
+  auditLogs         AuditLog[]
+  crmConnections    CrmConnection[]
+
+  @@map("tenants")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  tenantId     String?
+  email        String   @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         UserRole
+  isActive     Boolean  @default(true)
+  mfaEnabled   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tenant             Tenant?              @relation(fields: [tenantId], references: [id])
+  assignedLeads      Lead[]               @relation("AssignedCounsellor")
+  counsellorAssignments CounsellorAssignment[]
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  tenantId    String
+  name        String
+  isActive    Boolean  @default(false)
+  flowConfig  Json
+  callerId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  leads       Lead[]
+
+  @@index([tenantId])
+  @@map("campaigns")
+}
+
+model CrmConnection {
+  id           String   @id @default(cuid())
+  tenantId     String
+  provider     String
+  credentials  Json
+  fieldMapping Json?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tenant       Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId])
+  @@map("crm_connections")
+}
+
+model Lead {
+  id            String     @id @default(cuid())
+  tenantId      String
+  campaignId    String?
+  crmLeadId     String?
+  name          String
+  phoneE164     String
+  email         String?
+  courseInterest String?
+  source        String?
+  status        LeadStatus @default(NEW)
+  inquiryAt     DateTime   @default(now())
+  dedupKey      String
+  assignedToId  String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  tenant        Tenant     @relation(fields: [tenantId], references: [id])
+  campaign      Campaign?  @relation(fields: [campaignId], references: [id])
+  assignedTo    User?      @relation("AssignedCounsellor", fields: [assignedToId], references: [id])
+  callSessions  CallSession[]
+  assignments   CounsellorAssignment[]
+
+  @@unique([tenantId, dedupKey])
+  @@index([tenantId, status])
+  @@index([tenantId, phoneE164])
+  @@map("leads")
+}
+
+model CallSession {
+  id               String            @id @default(cuid())
+  tenantId         String
+  leadId           String
+  status           CallSessionStatus @default(INITIATED)
+  providerCallId   String?
+  disposition      CallDisposition?
+  leadScore        LeadScore?
+  confidence       Float?
+  languageDetected String?
+  transcriptUrl    String?
+  recordingUrl     String?
+  slots            Json?
+  startedAt        DateTime?
+  endedAt          DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  tenant           Tenant            @relation(fields: [tenantId], references: [id])
+  lead             Lead              @relation(fields: [leadId], references: [id])
+  transcriptTurns  TranscriptTurn[]
+
+  @@index([tenantId, createdAt])
+  @@index([leadId])
+  @@map("call_sessions")
+}
+
+model TranscriptTurn {
+  id            String   @id @default(cuid())
+  callSessionId String
+  speaker       String
+  text          String
+  timestampMs   Int
+  createdAt     DateTime @default(now())
+
+  callSession   CallSession @relation(fields: [callSessionId], references: [id], onDelete: Cascade)
+
+  @@index([callSessionId])
+  @@map("transcript_turns")
+}
+
+model CounsellorAssignment {
+  id                String    @id @default(cuid())
+  leadId            String
+  counsellorId      String
+  callbackScheduledAt DateTime?
+  isOverdue         Boolean   @default(false)
+  contextPackage    Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  lead              Lead      @relation(fields: [leadId], references: [id])
+  counsellor        User      @relation(fields: [counsellorId], references: [id])
+
+  @@index([counsellorId])
+  @@map("counsellor_assignments")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  tenantId     String?
+  actorId      String?
+  actorRole    String?
+  action       String
+  resourceType String
+  resourceId   String?
+  outcome      String
+  ipAddress    String?
+  beforeJson   Json?
+  afterJson    Json?
+  reason       String?
+  createdAt    DateTime @default(now())
+
+  tenant       Tenant?  @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, createdAt])
+  @@index([actorId])
+  @@map("audit_logs")
+}

@@ -1,0 +1,26 @@
+{
+  "name": "admitiq",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AdmitIQ — AI voice agent for Indian education admissions",
+  "scripts": {
+    "dev": "pnpm run --parallel dev:api dev:admin dev:ops dev:counsellor",
+    "dev:api": "pnpm --filter @admitiq/api dev",
+    "dev:admin": "pnpm --filter @admitiq/web-admin dev",
+    "dev:ops": "pnpm --filter @admitiq/web-ops dev",
+    "dev:counsellor": "pnpm --filter @admitiq/web-counsellor dev",
+    "dev:orchestrator": "pnpm --filter @admitiq/orchestrator dev",
+    "dev:voice": "pnpm --filter @admitiq/voice dev",
+    "build": "pnpm run -r build",
+    "db:generate": "pnpm --filter @admitiq/db generate",
+    "db:migrate": "pnpm --filter @admitiq/db migrate",
+    "db:push": "pnpm --filter @admitiq/db push",
+    "db:seed": "pnpm --filter @admitiq/db seed",
+    "build:packages": "pnpm --filter @admitiq/shared build && pnpm --filter @admitiq/db build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

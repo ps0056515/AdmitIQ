@@ -1,0 +1,18 @@
+export type UserRoleName =
+  | 'TENANT_ADMIN'
+  | 'OPERATIONS_MANAGER'
+  | 'COUNSELLOR_SUPERVISOR'
+  | 'COUNSELLOR'
+  | 'ANALYST'
+  | 'PLATFORM_ADMIN'
+  | 'SUPPORT_AGENT';
+
+export const TENANT_ROLES: UserRoleName[] = [
+  'TENANT_ADMIN',
+  'OPERATIONS_MANAGER',
+  'COUNSELLOR_SUPERVISOR',
+  'COUNSELLOR',
+  'ANALYST',
+];
+
+export const INTERNAL_ROLES: UserRoleName[] = ['PLATFORM_ADMIN', 'SUPPORT_AGENT'];
