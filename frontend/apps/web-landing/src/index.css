@@ -1,0 +1,573 @@
+/* ─── Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+@source "../../packages/ui/src";
+
+/* ─── Tailwind v4 Theme Tokens ─── */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-cyan-glow: #22d3ee;
+  --color-violet-glow: #8b5cf6;
+  --color-emerald-glow: #34d399;
+  --color-amber-glow: #fbbf24;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ─── Design Tokens: Dark (Default) ─── */
+@layer base {
+  :root {
+    --background: #030712;
+    --foreground: #f1f5f9;
+    --card: #0a0f1e;
+    --card-foreground: #f1f5f9;
+    --popover: #0a0f1e;
+    --popover-foreground: #f1f5f9;
+    --primary: #22d3ee;
+    --primary-foreground: #030712;
+    --secondary: #111827;
+    --secondary-foreground: #f1f5f9;
+    --muted: #111827;
+    --muted-foreground: #64748b;
+    --accent: #8b5cf6;
+    --accent-foreground: #f1f5f9;
+    --destructive: #ef4444;
+    --destructive-foreground: #f1f5f9;
+    --border: rgba(255, 255, 255, 0.06);
+    --input: #111827;
+    --ring: #22d3ee;
+    --radius: 0.75rem;
+
+    /* Glass tokens */
+    --glass-bg: rgba(10, 15, 30, 0.6);
+    --glass-bg-strong: rgba(10, 15, 30, 0.85);
+    --glass-bg-card: rgba(10, 15, 30, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-border-hover: rgba(34, 211, 238, 0.15);
+    --glass-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+    --glass-shadow-hover: 0 8px 60px rgba(0, 0, 0, 0.5);
+
+    /* Grid/texture tokens */
+    --grid-line: rgba(255, 255, 255, 0.02);
+    --grid-line-dense: rgba(255, 255, 255, 0.03);
+    --dot-color: rgba(255, 255, 255, 0.06);
+
+    /* Selection */
+    --selection-bg: rgba(34, 211, 238, 0.2);
+    --selection-color: #f1f5f9;
+
+    /* Scrollbar */
+    --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
+
+    /* Surface overlay */
+    --surface-overlay: rgba(255, 255, 255, 0.04);
+    --surface-overlay-hover: rgba(255, 255, 255, 0.08);
+
+    /* Transition */
+    --theme-transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ─── Light Theme ─── */
+  :root.light {
+    --background: #fafbfc;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --popover: #ffffff;
+    --popover-foreground: #0f172a;
+    --primary: #0891b2;
+    --primary-foreground: #ffffff;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #0f172a;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #7c3aed;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: rgba(15, 23, 42, 0.08);
+    --input: #f1f5f9;
+    --ring: #0891b2;
+
+    /* Glass tokens — light */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-bg-strong: rgba(255, 255, 255, 0.88);
+    --glass-bg-card: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(15, 23, 42, 0.06);
+    --glass-border-hover: rgba(8, 145, 178, 0.2);
+    --glass-shadow: 0 4px 40px rgba(15, 23, 42, 0.06);
+    --glass-shadow-hover: 0 8px 60px rgba(15, 23, 42, 0.08);
+
+    /* Grid/texture tokens — light */
+    --grid-line: rgba(15, 23, 42, 0.04);
+    --grid-line-dense: rgba(15, 23, 42, 0.05);
+    --dot-color: rgba(15, 23, 42, 0.06);
+
+    /* Selection — light */
+    --selection-bg: rgba(8, 145, 178, 0.15);
+    --selection-color: #0f172a;
+
+    /* Scrollbar — light */
+    --scrollbar-thumb: rgba(15, 23, 42, 0.12);
+    --scrollbar-thumb-hover: rgba(15, 23, 42, 0.2);
+
+    /* Surface overlay — light */
+    --surface-overlay: rgba(15, 23, 42, 0.03);
+    --surface-overlay-hover: rgba(15, 23, 42, 0.06);
+  }
+}
+
+/* ─── Base Layer ─── */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-color);
+  }
+
+  /* Theme transition for all elements */
+  *,
+  *::before,
+  *::after {
+    transition: background-color var(--theme-transition), border-color var(--theme-transition), color var(--theme-transition), box-shadow var(--theme-transition);
+  }
+}
+
+/* ─── Glassmorphism Utilities (Theme-Aware) ─── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  transition: background var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  border: 1px solid var(--glass-border);
+  transition: background var(--theme-transition), border-color var(--theme-transition);
+}
+
+.glass-card {
+  background: var(--glass-bg-card);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 0 0 1px var(--glass-border),
+    var(--glass-shadow);
+  transition: background var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow:
+    0 0 0 1px var(--glass-border-hover),
+    var(--glass-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* ─── Text Gradients ─── */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #22d3ee 0%, #67e8f9 50%, #22d3ee 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+.text-gradient-multi {
+  background: linear-gradient(135deg, #22d3ee 0%, #8b5cf6 40%, #ec4899 70%, #22d3ee 100%);
+  background-size: 300% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 6s linear infinite;
+}
+
+.text-gradient-violet {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #c4b5fd 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ─── Glow Effects ─── */
+.glow-cyan {
+  box-shadow:
+    0 0 20px rgba(34, 211, 238, 0.15),
+    0 0 60px rgba(34, 211, 238, 0.05);
+}
+
+.glow-cyan-strong {
+  box-shadow:
+    0 0 30px rgba(34, 211, 238, 0.3),
+    0 0 80px rgba(34, 211, 238, 0.1),
+    0 0 120px rgba(34, 211, 238, 0.05);
+}
+
+.glow-violet {
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.15),
+    0 0 60px rgba(139, 92, 246, 0.05);
+}
+
+.glow-dot-cyan {
+  box-shadow: 0 0 8px 2px rgba(34, 211, 238, 0.6);
+}
+
+.glow-dot-emerald {
+  box-shadow: 0 0 8px 2px rgba(52, 211, 153, 0.6);
+}
+
+.glow-dot-violet {
+  box-shadow: 0 0 8px 2px rgba(139, 92, 246, 0.6);
+}
+
+.glow-dot-amber {
+  box-shadow: 0 0 8px 2px rgba(251, 191, 36, 0.6);
+}
+
+/* ─── Background Textures (Theme-Aware) ─── */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-grid-dense {
+  background-image:
+    linear-gradient(var(--grid-line-dense) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-dense) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-radial-top {
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34, 211, 238, 0.08), transparent 60%);
+}
+
+.bg-radial-center {
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(34, 211, 238, 0.06), transparent 70%);
+}
+
+/* ─── Keyframe Animations ─── */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes wave-bar {
+  0%, 100% { height: 20%; }
+  50% { height: 100%; }
+}
+
+@keyframes spotlight {
+  0% { opacity: 0; transform: translateX(-100%) rotate(25deg); }
+  30% { opacity: 0.15; }
+  100% { opacity: 0; transform: translateX(200%) rotate(25deg); }
+}
+
+@keyframes border-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes typing-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fade-up-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius, 120px)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius, 120px)) rotate(-360deg); }
+}
+
+/* ─── Animation Utility Classes ─── */
+.animate-pulse-ring {
+  animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-spotlight {
+  animation: spotlight 8s ease-in-out infinite;
+}
+
+.animate-typing-cursor {
+  animation: typing-cursor 1s step-end infinite;
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+/* ─── Gradient Border Utility ─── */
+.border-gradient {
+  position: relative;
+}
+
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(139, 92, 246, 0.3), rgba(34, 211, 238, 0.1));
+  background-size: 200% auto;
+  animation: border-flow 4s linear infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* ─── Scrollbar (Theme-Aware) ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* ─── Utility ─── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── Light Theme Component Overrides ─── */
+/* Remap white-opacity patterns to dark-ink equivalents in light mode */
+:root.light {
+  /* Override hardcoded bg-white/[0.xx] patterns */
+  /* These are used across Hero, Dashboard, LiveDemo, Bento, etc. */
+}
+
+/* Light mode: swap common white-opacity surface patterns */
+.light .bg-white\/\[0\.02\],
+.light .bg-white\/\[0\.03\],
+.light .bg-white\/\[0\.04\] {
+  background-color: rgba(15, 23, 42, 0.03) !important;
+}
+
+.light .hover\:bg-white\/\[0\.03\]:hover,
+.light .hover\:bg-white\/\[0\.04\]:hover {
+  background-color: rgba(15, 23, 42, 0.05) !important;
+}
+
+.light .hover\:bg-white\/\[0\.08\]:hover {
+  background-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Light mode: border overrides */
+.light .border-white\/\[0\.04\],
+.light .border-white\/\[0\.06\],
+.light .border-white\/\[0\.08\] {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+.light .divide-white\/\[0\.06\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Light mode: text adjustments for hardcoded slate colors */
+.light .text-slate-200 {
+  color: #334155 !important;
+}
+
+.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+.light .text-slate-600 {
+  color: #475569 !important;
+}
+
+/* Light mode: glow toning */
+.light .glow-cyan {
+  box-shadow:
+    0 0 20px rgba(8, 145, 178, 0.08),
+    0 0 60px rgba(8, 145, 178, 0.03);
+}
+
+.light .glow-cyan-strong {
+  box-shadow:
+    0 0 30px rgba(8, 145, 178, 0.12),
+    0 0 80px rgba(8, 145, 178, 0.05);
+}
+
+/* Light mode: reduce heavy dark shadows in radial gradients */
+.light .shadow-\[0_8px_40px_rgba\(0\,0\,0\,0\.4\)\] {
+  box-shadow: 0 8px 40px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Light mode: gradient border toning */
+.light .border-gradient::before {
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.25), rgba(124, 58, 237, 0.2), rgba(8, 145, 178, 0.08));
+}
+
+/* Light mode: adjust red/amber/orange problem section colors for readability */
+.light .text-red-400 { color: #dc2626 !important; }
+.light .text-amber-400 { color: #d97706 !important; }
+.light .text-orange-400 { color: #ea580c !important; }
+.light .text-emerald-400 { color: #059669 !important; }
+.light .text-cyan-400 { color: #0891b2 !important; }
+.light .text-violet-400 { color: #7c3aed !important; }
+.light .text-amber-300 { color: #d97706 !important; }
+
+/* Light mode: text gradient adjustments */
+.light .text-gradient-cyan {
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #0891b2 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.light .text-gradient-multi {
+  background: linear-gradient(135deg, #0891b2 0%, #7c3aed 40%, #db2777 70%, #0891b2 100%);
+  background-size: 300% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.light .text-gradient-violet {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Light mode: status dot glow reduction */
+.light .shadow-\[0_0_8px_rgba\(52\,211\,153\,0\.6\)\] {
+  box-shadow: 0 0 6px rgba(5, 150, 105, 0.4) !important;
+}
+.light .shadow-\[0_0_6px_rgba\(52\,211\,153\,0\.5\)\] {
+  box-shadow: 0 0 4px rgba(5, 150, 105, 0.3) !important;
+}
+.light .shadow-\[0_0_8px_rgba\(34\,211\,238\,0\.5\)\] {
+  box-shadow: 0 0 6px rgba(8, 145, 178, 0.4) !important;
+}
+.light .shadow-\[0_0_10px_rgba\(34\,211\,238\,0\.5\)\] {
+  box-shadow: 0 0 8px rgba(8, 145, 178, 0.3) !important;
+}
+.light .shadow-\[0_0_10px_rgba\(139\,92\,246\,0\.5\)\] {
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.3) !important;
+}
+.light .shadow-\[0_0_10px_rgba\(52\,211\,153\,0\.5\)\] {
+  box-shadow: 0 0 8px rgba(5, 150, 105, 0.3) !important;
+}
+
+/* Light mode: logo icon in footer/navbar should remain dark */
+.light .shadow-\[0_0_20px_rgba\(34\,211\,238\,0\.2\)\] {
+  box-shadow: 0 0 20px rgba(8, 145, 178, 0.15) !important;
+}
+
+/* Light mode: soften colored bg panels */
+.light .bg-red-500\/\[0\.06\] { background-color: rgba(220, 38, 38, 0.06) !important; }
+.light .bg-amber-500\/\[0\.06\] { background-color: rgba(217, 119, 6, 0.06) !important; }
+.light .bg-orange-500\/\[0\.06\] { background-color: rgba(234, 88, 12, 0.06) !important; }
+.light .bg-cyan-500\/\[0\.03\] { background-color: rgba(8, 145, 178, 0.04) !important; }
+.light .bg-cyan-500\/\[0\.06\] { background-color: rgba(8, 145, 178, 0.06) !important; }
+.light .bg-violet-500\/\[0\.06\] { background-color: rgba(124, 58, 237, 0.06) !important; }
+.light .bg-emerald-500\/\[0\.08\] { background-color: rgba(5, 150, 105, 0.06) !important; }

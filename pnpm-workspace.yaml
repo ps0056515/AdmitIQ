@@ -1,3 +1,14 @@
 packages:
-  - "apps/*"
-  - "packages/*"
+  - "frontend/apps/*"
+  - "frontend/packages/*"
+  - "backend/legacy/apps/*"
+  - "backend/legacy/packages/*"
+allowBuilds:
+  '@nestjs/core': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@scarf/scarf': false
+  esbuild: true
+  msgpackr-extract: true
+  prisma: true
+
